@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Portal ECI</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+  :root{
+    color-scheme: light;
+    --bg:#FFFFFF; --bg-raised:#FFFFFF; --bg-sunken:#EAF1FC;
+    --text:#0B1220; --text-soft:#42506B; --text-faint:#7C8AA6;
+    --border:#DCE6F5;
+    --accent:#0B5ED7; --accent-soft:#E8F1FE; --accent-strong:#08387F;
+    --ok:#12805A; --ok-soft:#E1F4EC;
+    --warn:#B4560D; --warn-soft:#FBEEE2;
+    --crit:#A32F2F; --crit-soft:#FBEAEA;
+    --done:#6B3FA0; --done-soft:#F1EBFA;
+    --shadow: 0 1px 2px rgba(11,94,215,0.05), 0 10px 28px rgba(11,94,215,0.07);
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:'IBM Plex Sans', system-ui, sans-serif; line-height:1.55; font-size:15.5px; }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; }
+  a{ color:inherit; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 clamp(1.1rem,4vw,2.6rem) 4rem; }
+
+  .masthead{ background:var(--bg-raised); border-bottom:1px solid var(--border); padding:2.1rem clamp(1.1rem,4vw,2.6rem) 1.6rem; }
+  .eyebrow{ font-family:'IBM Plex Mono'; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:600; margin:0 0 .5rem; }
+  h1{ font-size:clamp(1.5rem,3vw,2rem); font-weight:700; letter-spacing:-.01em; margin:0 0 .45rem; text-wrap:balance; }
+  .subhead{ color:var(--text-soft); font-size:.95rem; max-width:70ch; margin:0; }
+
+  /* status strip */
+  .status-strip{ display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-top:1.8rem; box-shadow:var(--shadow); }
+  .status-cell{ background:var(--bg-raised); padding:1.1rem 1.2rem; display:flex; flex-direction:column; gap:.3rem; }
+  .status-cell .num{ font-family:'IBM Plex Mono'; font-size:1.6rem; font-weight:700; color:var(--accent-strong); }
+  .status-cell.crit .num{ color:var(--crit); }
+  .status-cell .lbl{ font-size:.78rem; color:var(--text-soft); }
+
+  section{ margin-top:2.6rem; }
+  h2{ font-size:1.15rem; font-weight:700; margin:0 0 .3rem; letter-spacing:-.005em; }
+  .section-intro{ color:var(--text-soft); font-size:.9rem; margin:0 0 1.2rem; max-width:72ch; }
+
+  /* nav cards to other artifacts */
+  .hub-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:1rem; }
+  .hub-card{ display:flex; flex-direction:column; gap:.55rem; background:var(--bg-raised); border:1px solid var(--border); border-radius:14px; padding:1.3rem 1.4rem; text-decoration:none; box-shadow:var(--shadow); transition:transform .15s ease, border-color .15s ease; }
+  .hub-card:hover{ transform:translateY(-2px); border-color:var(--accent); }
+  .hub-card .icon{ font-size:1.4rem; }
+  .hub-card .title{ font-weight:700; font-size:1.02rem; color:var(--text); }
+  .hub-card .desc{ font-size:.85rem; color:var(--text-soft); }
+  .hub-card .meta{ margin-top:.3rem; font-family:'IBM Plex Mono'; font-size:.72rem; color:var(--accent); }
+
+  /* changelog callout */
+  .changelog{ background:var(--warn-soft); border:1px solid #F0D3B8; border-radius:14px; padding:1.3rem 1.5rem; }
+  .changelog h3{ margin:0 0 .6rem; font-size:.95rem; color:var(--warn); }
+  .changelog ul{ margin:0; padding-left:1.1rem; display:flex; flex-direction:column; gap:.45rem; font-size:.88rem; }
+  .changelog li b{ color:var(--text); }
+
+  /* timeline */
+  .table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:12px; }
+  table{ width:100%; border-collapse:collapse; font-size:.86rem; }
+  thead th{ text-align:left; background:var(--bg-sunken); color:var(--text-soft); font-weight:600; padding:.6rem .9rem; font-size:.75rem; text-transform:uppercase; letter-spacing:.04em; }
+  tbody td{ padding:.6rem .9rem; border-top:1px solid var(--border); }
+  tbody tr.crit td{ background:var(--crit-soft); font-weight:600; }
+  tbody tr.done td{ opacity:.55; text-decoration:line-through; }
+  td.date{ font-family:'IBM Plex Mono'; white-space:nowrap; color:var(--accent-strong); font-weight:600; }
+
+  /* time-heavy tasks */
+  .task-list{ display:flex; flex-direction:column; gap:.6rem; }
+  .task{ display:flex; align-items:flex-start; gap:.8rem; background:var(--bg-raised); border:1px solid var(--border); border-radius:10px; padding:.85rem 1rem; }
+  .task .chk{ width:20px; height:20px; border-radius:5px; border:2px solid var(--border); flex-shrink:0; margin-top:.1rem; }
+  .task .body{ flex:1; }
+  .task .who{ font-family:'IBM Plex Mono'; font-size:.72rem; color:var(--text-faint); }
+  .task .txt{ font-size:.9rem; }
+  .task .days{ font-family:'IBM Plex Mono'; font-size:.75rem; font-weight:700; padding:.2rem .55rem; border-radius:20px; white-space:nowrap; }
+  .task .days.long{ background:var(--crit-soft); color:var(--crit); }
+  .task .days.med{ background:var(--warn-soft); color:var(--warn); }
+  .task .days.short{ background:var(--ok-soft); color:var(--ok); }
+
+  /* architecture notes */
+  .arch-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1rem; }
+  .arch-card{ background:var(--bg-raised); border:1px solid var(--border); border-left:4px solid var(--accent); border-radius:10px; padding:1rem 1.1rem; }
+  .arch-card h4{ margin:0 0 .4rem; font-size:.92rem; }
+  .arch-card p{ margin:0; font-size:.84rem; color:var(--text-soft); }
+
+  .reminder-box{ background:var(--accent-soft); border:1px solid #C9DEFB; border-radius:14px; padding:1.3rem 1.5rem; display:flex; gap:1rem; align-items:flex-start; }
+  .reminder-box .ic{ font-size:1.6rem; }
+  .reminder-box h3{ margin:0 0 .3rem; font-size:.98rem; }
+  .reminder-box p{ margin:0; font-size:.87rem; color:var(--text-soft); }
+
+  footer{ margin-top:3rem; padding-top:1.4rem; border-top:1px solid var(--border); font-size:.78rem; color:var(--text-faint); }
+</style>
+
+<div class="masthead">
+  <div class="wrap" style="padding:0;">
+    <p class="eyebrow">Blue Label Technologies · Gestión de propuesta</p>
+    <h1>Portal ECI — Modernización Datacenter</h1>
+    <p class="subhead">Un solo lugar para seguir el proceso de la Escuela Colombiana de Ingeniería: preguntas, checklist de cumplimiento, cronograma vigente (TdR 31-ago-2026), y lo que falta por resolver antes del 25 de septiembre.</p>
+
+    <div class="status-strip">
+      <div class="status-cell crit">
+        <span class="num mono">1 sep</span>
+        <span class="lbl">Cierre de consultas</span>
+      </div>
+      <div class="status-cell">
+        <span class="num mono">7 sep</span>
+        <span class="lbl">Envío propuesta técnica</span>
+      </div>
+      <div class="status-cell">
+        <span class="num mono">16 sep</span>
+        <span class="lbl">Propuesta final</span>
+      </div>
+      <div class="status-cell">
+        <span class="num mono">25 sep</span>
+        <span class="lbl">Selección y notificación</span>
+      </div>
+      <div class="status-cell">
+        <span class="num mono">2S 2026</span>
+        <span class="lbl">Implementación (según TdR)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <h2>Qué cambió con el TdR del 31 de agosto</h2>
+    <p class="section-intro">Versión actualizada de los términos de referencia — reemplaza la anterior. Detalle completo en el chat de esta sesión.</p>
+    <div class="changelog">
+      <h3>⚠️ 5 cambios que afectan lo que ya teníamos armado</h3>
+      <ul>
+        <li><b>Cronograma corrido ~5 días:</b> propuesta técnica ahora el 7-sep (antes 2-sep), propuesta final el 16-sep (antes 14-sep). Ya corregido en el artefacto de preguntas.</li>
+        <li><b>Alcance ampliado explícitamente:</b> el TdR ahora acepta HCI, infraestructura de 3 capas, nube privada, nube pública IaaS, PaaS e híbridos — no solo HCI. Confirma que nuestras 3 alternativas siguen vigentes y abre la puerta a jugar la carta híbrida si conviene.</li>
+        <li><b>Datos técnicos nuevos:</b> 384 GB RAM/nodo (1.536 TB agregados), CPU Xeon Silver 4214/4114 @ 2.20GHz (8 sockets), 6 interfaces 10 Gbps por nodo.</li>
+        <li><b>Evaluación con el 100% desglosado:</b> arquitectura 30% + TCO 20% + PoC 15% + SLA 15% + <b>experiencia 10%</b> + <b>implementación/migración 5%</b> + <b>valores agregados 5%</b>.</li>
+        <li><b>Fecha de implementación semi-confirmada:</b> el TdR dice literalmente "segundo semestre de 2026" — insumo directo para el costeo operacional de la pregunta 12.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Documentos de trabajo</h2>
+    <p class="section-intro">Cada uno se actualiza en su propio lugar — este portal solo apunta hacia ellos.</p>
+    <div class="hub-grid">
+      <a class="hub-card" href="https://claude.ai/code/artifact/4dabfe07-c766-48da-a5bf-93ec2bfab913" target="_blank" rel="noopener">
+        <span class="icon">❓</span>
+        <span class="title">Preguntas de consulta ECI</span>
+        <span class="desc">50 preguntas (35 detalladas + 15 ejecutivas), acuerdo colaborativo, cronograma vigente y resumen de la reunión Cydesys–BLT.</span>
+        <span class="meta">claude.ai/code/artifact →</span>
+      </a>
+      <a class="hub-card" href="https://claude.ai/code/artifact/c423682f-4d0a-40df-82c4-e3000b885c37" target="_blank" rel="noopener">
+        <span class="icon">✅</span>
+        <span class="title">Checklist RFQ ECI</span>
+        <span class="desc">114 ítems de cumplimiento con citación exacta al TdR y anexos, evidencia y observación por ítem.</span>
+        <span class="meta">claude.ai/code/artifact →</span>
+      </a>
+      <a class="hub-card" href="https://claude.ai/code/artifact/61bee825-b1a5-4773-bbbc-d2f2ef29a97d" target="_blank" rel="noopener">
+        <span class="icon">🏗️</span>
+        <span class="title">Solución Sangfor ECI</span>
+        <span class="desc">Arquitectura antes/después, 3 alternativas comerciales, vendors de servidor, puente de migración.</span>
+        <span class="meta">claude.ai/code/artifact →</span>
+      </a>
+      <a class="hub-card" href="https://claude.ai/code/artifact/169f561a-0585-46e0-bcd5-3501520562a6" target="_blank" rel="noopener">
+        <span class="icon">📋</span>
+        <span class="title">Requisitos habilitantes</span>
+        <span class="desc">21 requisitos jurídicos, financieros y de experiencia, con cita textual y página del TdR.</span>
+        <span class="meta">claude.ai/code/artifact →</span>
+      </a>
+      <a class="hub-card" href="https://docs.google.com/spreadsheets/d/1Ro2cEjuO2AZlUmIUt4NRlRZ26-96VNTF5ik7P_MHOzo/edit" target="_blank" rel="noopener">
+        <span class="icon">🟢</span>
+        <span class="title">Sheet colaborativo</span>
+        <span class="desc">Alternativa sin límites de edición simultánea para Camilo, Christian y Rodrigo — mismas 35+15 preguntas.</span>
+        <span class="meta">docs.google.com/spreadsheets →</span>
+      </a>
+      <a class="hub-card" href="https://claude.ai/code/artifact/decb377c-faf7-42e5-825c-35582f321144" target="_blank" rel="noopener">
+        <span class="icon">⚖️</span>
+        <span class="title">Estructura BLT–Cydesys</span>
+        <span class="desc">Memo de estructuración comercial y jurídica de la alianza (a confirmar si sigue como unión temporal).</span>
+        <span class="meta">claude.ai/code/artifact →</span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Cronograma vigente (TdR 31-ago-2026)</h2>
+    <p class="section-intro">Fuente única de fechas para toda la propuesta.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="width:170px">Fecha</th><th>Hito</th></tr></thead>
+        <tbody>
+          <tr class="done"><td class="date">19 ago 2026</td><td>Entrega de términos e invitación</td></tr>
+          <tr><td class="date">19 ago – 1 sep</td><td>Visita técnica y consultas (solo si es necesaria, previa cita) — rafael.duarte@escuelaing.edu.co, copia jimmy.ruiz@escuelaing.edu.co</td></tr>
+          <tr class="crit"><td class="date">1 sep</td><td>Cierre de consultas</td></tr>
+          <tr class="crit"><td class="date">7 sep · 12:00 pm</td><td>Envío de propuesta técnica (arquitectura y modelo ofertado)</td></tr>
+          <tr><td class="date">10 – 11 sep</td><td>Presentación de la propuesta técnica ante la Escuela</td></tr>
+          <tr><td class="date">14 sep</td><td>Preselección de oferentes</td></tr>
+          <tr><td class="date">15 – 19 sep</td><td>Pruebas de concepto (solo preseleccionados)</td></tr>
+          <tr class="crit"><td class="date">16 sep · 12:00 pm</td><td>Propuesta final (técnica + económica + implementación + soporte, Anexo 2 diligenciado)</td></tr>
+          <tr><td class="date">21 – 24 sep</td><td>Exposición ante comité evaluador</td></tr>
+          <tr><td class="date">25 sep</td><td>Selección y notificación</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Frentes que consumen tiempo — arrancar ya</h2>
+    <p class="section-intro">Lo que no se resuelve en un día y puede volverse cuello de botella antes del 7 de septiembre.</p>
+    <div class="task-list">
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Definir con Christian si Cydesys entra como unión temporal o subcontratista — cambia toda la redacción jurídica de la propuesta.</div><div class="who">Rodrigo + Christian</div></div><span class="days long">Bloqueante</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Construir el BOM y arquitectura física con Sangfor (Andrés, Mauricio, preventa Chile) sobre los datos nuevos del TdR (RAM/CPU/red).</div><div class="who">Christian → Sangfor</div></div><span class="days long">~5-7 días</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Reunir certificados jurídicos y financieros vigentes (existencia y representación, RUT, estados financieros 2025 + corte 2026).</div><div class="who">BLT / Cydesys legal-financiero</div></div><span class="days med">~3-5 días</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Cotizar pólizas de seriedad de la oferta (10% del contrato) con la aseguradora.</div><div class="who">BLT</div></div><span class="days med">~3 días</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Diligenciar Anexo 2 (TCO a 5 años) para las 3 alternativas comerciales, con IPC 6% y TRM $3.350 según el TdR.</div><div class="who">Rodrigo + Camilo</div></div><span class="days med">~4 días</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Enviar preguntas de consulta consolidadas antes del cierre.</div><div class="who">Rodrigo</div></div><span class="days short">1 día</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Preparar evidencia de seguridad (MFA, logging inmutable, alineación Ley 1581 / ISO 27001) para el criterio de arquitectura.</div><div class="who">Christian / Sangfor</div></div><span class="days med">~3 días</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Arquitectura — lo que hay que tener presente</h2>
+    <div class="arch-grid">
+      <div class="arch-card"><h4>Origen: VMware ESXi 7.0.3 / vCenter 7</h4><p>4 nodos Dell (2× R740XD, 2× R740), 384GB RAM/nodo, vSAN 61.44TB brutos, switch Extreme 48×10Gbps (24 en uso).</p></div>
+      <div class="arch-card"><h4>Destino: neutral por diseño</h4><p>El TdR admite HCI, 3 capas, nube privada/tercero, IaaS, PaaS o híbrido — la propuesta debe ganar por resultado, no por parecerse a Sangfor de entrada.</p></div>
+      <div class="arch-card"><h4>Migración</h4><p>Coexistencia temporal permitida; minimizar ventana de corte; tratamiento diferenciado para cargas legacy (CentOS 6.x, Windows Server 2012 R2).</p></div>
+      <div class="arch-card"><h4>Red</h4><p>Mínimo 10 Gbps redundante entre cómputo y almacenamiento, con capacidad de crecer a 25/40 Gbps — validar si el switch actual alcanza o hay que renovarlo.</p></div>
+      <div class="arch-card"><h4>Seguridad</h4><p>MFA + logging inmutable + Ley 1581/2012 + ISO 27001 — evidencia documental exigida, no basta con declararlo.</p></div>
+      <div class="arch-card"><h4>Cargas fuera del clúster</h4><p>Core académico en Oracle OCI, web en AWS, calidad en Azure — confirmar si entran al alcance del dimensionamiento a 5 años.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Recordatorio diario de avance</h2>
+    <div class="reminder-box">
+      <span class="ic">🔔</span>
+      <div>
+        <h3>Seguimiento automático activo</h3>
+        <p>Cada día se revisa el estado de la propuesta ECI (fechas críticas próximas, tareas sin marcar, y cambios en los documentos vinculados) y se envía un resumen corto del avance. Configurado a partir de esta sesión.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Fuente: TdR "Modernización de la plataforma de procesamiento y almacenamiento de datos del datacenter institucional", versión 31 de agosto de 2026 · Escuela Colombiana de Ingeniería Julio Garavito · Blue Label Technologies
+  </footer>
+
+</div>
+
+
+</body>
+</html>
