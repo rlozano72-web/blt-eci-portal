@@ -57,6 +57,15 @@
   .changelog ul{ margin:0; padding-left:1.1rem; display:flex; flex-direction:column; gap:.45rem; font-size:.88rem; }
   .changelog li b{ color:var(--text); }
 
+  .callout{ background:var(--accent-soft); border:1px solid #C9DEFB; border-radius:14px; padding:1.3rem 1.5rem; }
+  .callout h3{ margin:0 0 .6rem; font-size:.95rem; color:var(--accent-strong); }
+  .callout ul{ margin:0; padding-left:1.1rem; display:flex; flex-direction:column; gap:.45rem; font-size:.88rem; }
+  .callout li b{ color:var(--text); }
+  .callout.ok{ background:var(--ok-soft); border-color:#BFE6D6; }
+  .callout.ok h3{ color:var(--ok); }
+  .callout.crit{ background:var(--crit-soft); border-color:#F3C6C2; }
+  .callout.crit h3{ color:var(--crit); }
+
   /* timeline */
   .table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:12px; }
   table{ width:100%; border-collapse:collapse; font-size:.86rem; }
@@ -77,6 +86,8 @@
   .task .days.long{ background:var(--crit-soft); color:var(--crit); }
   .task .days.med{ background:var(--warn-soft); color:var(--warn); }
   .task .days.short{ background:var(--ok-soft); color:var(--ok); }
+  .task.done{ opacity:.65; }
+  .task.done .chk{ background:var(--ok); border-color:var(--ok); }
 
   /* architecture notes */
   .arch-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1rem; }
@@ -89,6 +100,19 @@
   .reminder-box h3{ margin:0 0 .3rem; font-size:.98rem; }
   .reminder-box p{ margin:0; font-size:.87rem; color:var(--text-soft); }
 
+  /* Q&A section */
+  .qa-list{ display:flex; flex-direction:column; gap:.9rem; }
+  .qa-item{ background:var(--bg-raised); border:1px solid var(--border); border-radius:12px; padding:1rem 1.2rem; }
+  .qa-q{ font-weight:600; font-size:.92rem; margin:0 0 .4rem; }
+  .qa-a{ font-size:.87rem; color:var(--text-soft); margin:0; padding-left:.9rem; border-left:3px solid var(--ok); }
+  .qa-a b{ color:var(--text); }
+
+  /* stat row */
+  .stat-row{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:.8rem; }
+  .stat-card{ background:var(--bg-raised); border:1px solid var(--border); border-radius:10px; padding:.9rem 1rem; text-align:center; }
+  .stat-card .n{ font-family:'IBM Plex Mono'; font-size:1.4rem; font-weight:700; color:var(--accent-strong); display:block; }
+  .stat-card .l{ font-size:.76rem; color:var(--text-soft); }
+
   footer{ margin-top:3rem; padding-top:1.4rem; border-top:1px solid var(--border); font-size:.78rem; color:var(--text-faint); }
 </style>
 
@@ -99,9 +123,9 @@
     <p class="subhead">Un solo lugar para seguir el proceso de la Escuela Colombiana de Ingeniería: preguntas, checklist de cumplimiento, cronograma vigente (TdR 31-ago-2026), y lo que falta por resolver antes del 25 de septiembre.</p>
 
     <div class="status-strip">
-      <div class="status-cell crit">
+      <div class="status-cell">
         <span class="num mono">1 sep</span>
-        <span class="lbl">Cierre de consultas</span>
+        <span class="lbl">Cierre de consultas — ✓ enviadas</span>
       </div>
       <div class="status-cell">
         <span class="num mono">7 sep</span>
@@ -115,9 +139,9 @@
         <span class="num mono">25 sep</span>
         <span class="lbl">Selección y notificación</span>
       </div>
-      <div class="status-cell">
-        <span class="num mono">2S 2026</span>
-        <span class="lbl">Implementación (según TdR)</span>
+      <div class="status-cell crit">
+        <span class="num mono">31 mar 27</span>
+        <span class="lbl">Fecha límite: 100% en producción (confirmado por la ECI)</span>
       </div>
     </div>
   </div>
@@ -129,18 +153,109 @@
     <h2>Qué cambió con el TdR del 31 de agosto</h2>
     <p class="section-intro">Versión actualizada de los términos de referencia — reemplaza la anterior. Detalle completo en el chat de esta sesión.</p>
     <div class="changelog">
-      <h3>⚠️ 5 cambios que afectan lo que ya teníamos armado</h3>
+      <h3>⚠️ Cambios que afectan lo que ya teníamos armado</h3>
       <ul>
         <li><b>Cronograma corrido ~5 días:</b> propuesta técnica ahora el 7-sep (antes 2-sep), propuesta final el 16-sep (antes 14-sep). Ya corregido en el artefacto de preguntas.</li>
         <li><b>Alcance ampliado explícitamente:</b> el TdR ahora acepta HCI, infraestructura de 3 capas, nube privada, nube pública IaaS, PaaS e híbridos — no solo HCI. Confirma que nuestras 3 alternativas siguen vigentes y abre la puerta a jugar la carta híbrida si conviene.</li>
         <li><b>Datos técnicos nuevos:</b> 384 GB RAM/nodo (1.536 TB agregados), CPU Xeon Silver 4214/4114 @ 2.20GHz (8 sockets), 6 interfaces 10 Gbps por nodo.</li>
         <li><b>Evaluación con el 100% desglosado:</b> arquitectura 30% + TCO 20% + PoC 15% + SLA 15% + <b>experiencia 10%</b> + <b>implementación/migración 5%</b> + <b>valores agregados 5%</b>.</li>
-        <li><b>Fecha de implementación semi-confirmada:</b> el TdR dice literalmente "segundo semestre de 2026" — insumo directo para el costeo operacional de la pregunta 12.</li>
-        <li><b>Solución técnica y TCO/RTO actualizados:</b> el dimensionamiento (cómputo, RAM, storage, red) y la estructura del cotizador Sangfor vs. VMware ya reflejan estos datos nuevos — ver el documento de Solución.</li>
+        <li><b>Solución técnica y TCO/RTO actualizados:</b> el dimensionamiento (cómputo, RAM, storage, red) y la estructura del cotizador Sangfor vs. VMware ya reflejan estos datos — ver el documento de Solución.</li>
         <li><b>Arquitectura de red visual:</b> nuevo diagrama de conectividad del clúster (nodos, switches redundantes, core, firewall) y camino de crecimiento 10G→25/40G.</li>
         <li><b>Servidores de última generación:</b> sin importar la marca (Dell/HPE/Lenovo), la oferta debe usar siempre el modelo más reciente disponible al cotizar — nunca hardware en fin de vida.</li>
-        <li><b>Estructura BLT–Cydesys rehecha:</b> pasa de ser un memo que solo protegía a BLT a un modelo de Unión Temporal con responsabilidad y beneficio repartidos de forma equilibrada entre ambas empresas.</li>
+        <li><b>Estructura BLT–Cydesys rehecha:</b> modelo de Unión Temporal con responsabilidad y beneficio repartidos de forma equilibrada entre ambas empresas — validado además por la respuesta oficial de la ECI (ver abajo).</li>
         <li><b>Cotización real de Sangfor recibida:</b> USD $38.181 (licenciamiento + soporte + migración, vía EVOCOM) ya cargada al TCO — con 2 alertas por validar (appliance testigo de 2 nodos, y alcance de storage/seguridad del bundle) y a la espera de la propuesta de arquitectura física de Christian.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="respuestas-eci">
+    <h2>Respuestas oficiales de la ECI a nuestras preguntas (recibidas 2-sep)</h2>
+    <p class="section-intro">La Escuela respondió el cuestionario formal de consulta. Estas respuestas destraban varias decisiones de diseño y de estructura jurídica que teníamos abiertas.</p>
+    <div class="qa-list">
+      <div class="qa-item">
+        <p class="qa-q">¿Capacidad mínima útil real (61,44 TB actual vs. 80–100 TB del Anexo 4)?</p>
+        <p class="qa-a"><b>Libertad total:</b> son valores de referencia. Cada proponente define y sustenta técnicamente su propia capacidad, indicando si hay sobre o subdimensionamiento.</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">¿Métricas históricas de CPU/IOPS/latencia para calcular la holgura del 40%?</p>
+        <p class="qa-a"><b>No existen registros históricos consolidados.</b> El dimensionamiento debe hacerse con el inventario y RVTools ya entregados — sin baseline adicional que esperar.</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">¿Arquitectura mínima de 4 nodos, o libertad de diseño?</p>
+        <p class="qa-a"><b>Libertad total de número y configuración de nodos</b> — no es obligatorio mantener el conteo actual, siempre que se garantice capacidad, HA, resiliencia y crecimiento.</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">¿Clasificación formal de las VMs por criticidad, RPO/RTO?</p>
+        <p class="qa-a"><b>Sí existe</b> — la Escuela tiene un BIA tecnológico (de Sonda, 2022) con RPO/RTO de las VMs críticas, que será entregado como referencia. Ver análisis en la sección siguiente.</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">¿Acronis debe mantenerse como backup corporativo?</p>
+        <p class="qa-a"><b>No es obligatorio renovar ni reemplazar Acronis</b> como parte de esta propuesta — su licencia vence en enero de 2027 y su continuidad la evalúa la Dirección de Tecnología por separado. Despeja la duda de compatibilidad que teníamos marcada como brecha.</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">¿Se valora la microsegmentación nativa entre VMs?</p>
+        <p class="qa-a"><b>Sí, de forma explícita</b> — la Escuela la valorará positivamente para tráfico este-oeste y reducción de movimiento lateral. El proponente debe detallar funcionalidades, integración y licenciamiento asociado.</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">¿Se admiten uniones temporales, consorcios o alianzas?</p>
+        <p class="qa-a"><b>Sí, se admiten</b> — pero con condiciones estrictas: responsabilidad solidaria total, un único representante/vocero, garantías del numeral 3.5 unificadas a nombre de todos los integrantes, un solo esquema de soporte/SLA sin fragmentar por componente, y documentación jurídica/financiera independiente por cada integrante. <b>Debe informarse de forma clara junto con la propuesta técnica</b> para que jurídico, compras y la Vicerrectoría Administrativa la evalúen con tiempo. Esto valida y detalla exactamente el modelo de Unión Temporal BLT–Cydesys ya definido.</p>
+      </div>
+      <div class="qa-item">
+        <p class="qa-q">¿Fecha estimada de inicio de implementación y puesta en producción?</p>
+        <p class="qa-a"><b>Inicio en el último trimestre de 2026</b> (aprovechando el receso académico de diciembre para ventanas de mantenimiento), con <b style="color:var(--crit);">fecha límite el 31 de marzo de 2027</b> para tener el 100% de las cargas migradas y en producción, antes del inicio del primer periodo académico de 2027. Esta es la fecha dura que reemplaza el "segundo semestre de 2026" genérico que teníamos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="bia-sonda">
+    <h2>Análisis del BIA Tecnológico (Sonda, 2022)</h2>
+    <p class="section-intro">Documento entregado por la ECI como referencia de RPO/RTO. Es la única clasificación formal de criticidad que existe — hecha por Sonda de Colombia en 2022 dentro de un proyecto de DRP, metodología ISO 22301 y guías MinTIC 10/11.</p>
+    <div class="stat-row">
+      <div class="stat-card"><span class="n">108</span><span class="l">actividades de TI clasificadas por tiempo de recuperación</span></div>
+      <div class="stat-card"><span class="n">16%</span><span class="l">de actividades deben activarse el mismo día (18 de 108)</span></div>
+      <div class="stat-card"><span class="n">82%</span><span class="l">del personal de TI (23 personas) debe estar disponible desde el día 1</span></div>
+      <div class="stat-card"><span class="n">31%</span><span class="l">de servidores (34 de ~108 físicos+virtuales) son de recuperación prioritaria (Tier 1)</span></div>
+    </div>
+    <div class="callout ok" style="margin-top:1rem;">
+      <h3>✅ Hallazgo clave a favor de nuestra propuesta</h3>
+      <ul>
+        <li>Los <b>cuatro nodos de hiperconvergencia actuales</b> (DNS, DHCP, Proxy Web, servicios core) están clasificados en el tier más exigente: <b>recuperación en menos de 4 horas</b>. También vCenter, el firewall perimetral y los servidores de aplicaciones/BD de Oracle.</li>
+        <li>Esto confirma que el clúster que estamos modernizando es, en la propia clasificación de la Escuela, <b>infraestructura crítica Tier-1</b> — respalda directamente nuestro diseño de HA (tolerancia a 2 nodos, live migration, CDP con RPO≈0 y RTO de segundos a 30 min), que supera ampliamente el umbral de 4 horas que la ECI exige como mínimo aceptable.</li>
+        <li>El 51% de las aplicaciones y el 61% de las bases de datos pueden tolerar indisponibilidad de más de 3 semanas — la migración puede secuenciarse con amplio margen para las cargas no críticas, dejando el foco de cuidado real en un grupo acotado de sistemas.</li>
+      </ul>
+    </div>
+    <div class="callout" style="margin-top:1rem;">
+      <h3>⚠️ A tener en cuenta</h3>
+      <p style="margin:0; font-size:.88rem; color:var(--text-soft);">El BIA es de <b style="color:var(--text);">2022</b> — 4 años de antigüedad. No incluye una tabla explícita de RPO/RTO en minutos por VM individual (solo tiers agregados de actividades/aplicaciones/infraestructura); ese detalle numérico puede estar en el archivo Excel original ("Información BIA TI ECI v2.xls") que no se compartió en este envío. Vale la pena pedirlo si se necesita RPO/RTO exacto por sistema para sustentar el dimensionamiento en la propuesta.</p>
+    </div>
+  </section>
+
+  <section id="cambios-inventario">
+    <h2>Cambios y hallazgos en el inventario (RVTools + inventario ECI, 2-sep)</h2>
+    <p class="section-intro">Primer inventario en vivo (RVTools export directo de vCenter) contra el que veníamos usando del TdR — confirma varias cosas y corrige otras.</p>
+    <div class="stat-row">
+      <div class="stat-card"><span class="n">66</span><span class="l">VMs dentro del alcance de dimensionamiento (vs. "~62" estimado antes)</span></div>
+      <div class="stat-card"><span class="n">~19</span><span class="l">VMs explícitamente fuera de alcance (investigación, demos, pruebas descontinuadas)</span></div>
+      <div class="stat-card"><span class="n">84</span><span class="l">cores físicos reales en el clúster vSAN (4 nodos), no ~88 como se estimaba</span></div>
+      <div class="stat-card"><span class="n">71%</span><span class="l">uso real de storage vSAN hoy (vs. 67% citado en el TdR) — sigue subiendo</span></div>
+    </div>
+    <div class="callout crit" style="margin-top:1rem;">
+      <span class="tag"></span>
+      <h3>🔴 Hallazgo nuevo: 3 hosts adicionales fuera del clúster HCI</h3>
+      <p style="margin:0; font-size:.88rem; color:var(--text-soft);">El export de RVTools revela <b style="color:var(--text);">tres servidores ESXi standalone que el TdR no menciona</b>, corriendo VMware ESXi 6.5 (fuera de soporte extendido) y hospedando las ~19 VMs marcadas como "fuera del dimensionamiento" (investigación, demos Oracle, servidores de impresión, Sharepoint legacy):</p>
+      <ul style="margin:.6rem 0 0;">
+        <li><b>10.1.0.24</b> — Lenovo ThinkSystem ST550, Xeon Silver 4110, 16 cores, 256 GB RAM.</li>
+        <li><b>10.1.0.25</b> — Dell PowerEdge R330, Xeon E3-1270 v5, 4 cores, 32 GB RAM.</li>
+        <li><b>10.1.0.26</b> — Dell PowerEdge R630, Xeon E5-2698 v3, 32 cores, 128 GB RAM.</li>
+      </ul>
+      <p style="margin:.6rem 0 0; font-size:.88rem; color:var(--text-soft);">Ninguno de los tres aparece en el TdR ni en los anexos oficiales. Vale la pena preguntar directamente a la Escuela si estos equipos quedan fuera de forma permanente del alcance del proyecto, o si en algún momento del horizonte a 5 años se espera consolidarlos también en la nueva plataforma.</p>
+    </div>
+    <div class="callout" style="margin-top:1rem;">
+      <h3>Otros datos confirmados por RVTools</h3>
+      <ul>
+        <li><b>Estado del clúster:</b> vCenter reporta el clúster "ECI-vSAN" con <i>OverallStatus: red</i> (estado de alerta) — refuerza la urgencia real de la modernización, más allá de lo declarado en el TdR.</li>
+        <li><b>Distribución real de CPU:</b> 3 nodos con Xeon Silver 4114 (10 cores c/u) + 1 nodo con Xeon Silver 4214 (12 cores) = 84 cores físicos totales, 168 hilos — consistente con la RAM total de ~1,53 TB que ya teníamos del TdR.</li>
+        <li><b>Sobre-asignación actual:</b> 370 vCPU asignados a las VMs del clúster contra 84 cores físicos — ratio ~4,4:1, dato útil para no sobredimensionar de más al calcular el clúster nuevo.</li>
       </ul>
     </div>
   </section>
@@ -152,7 +267,7 @@
       <a class="hub-card" href="https://claude.ai/code/artifact/4dabfe07-c766-48da-a5bf-93ec2bfab913" target="_blank" rel="noopener">
         <span class="icon">❓</span>
         <span class="title">Preguntas de consulta ECI</span>
-        <span class="desc">50 preguntas (35 detalladas + 15 ejecutivas), acuerdo colaborativo, cronograma vigente y resumen de la reunión Cydesys–BLT.</span>
+        <span class="desc">50 preguntas (35 detalladas + 15 ejecutivas) — ✓ ya enviadas y respondidas por la Escuela.</span>
         <span class="meta">claude.ai/code/artifact →</span>
       </a>
       <a class="hub-card" href="https://claude.ai/code/artifact/c423682f-4d0a-40df-82c4-e3000b885c37" target="_blank" rel="noopener">
@@ -164,7 +279,7 @@
       <a class="hub-card" href="https://claude.ai/code/artifact/61bee825-b1a5-4773-bbbc-d2f2ef29a97d" target="_blank" rel="noopener">
         <span class="icon">🏗️</span>
         <span class="title">Solución Sangfor ECI</span>
-        <span class="desc">Arquitectura antes/después, 3 alternativas comerciales, vendors de servidor, puente de migración, y nueva sección de dimensionamiento con TCO/RTO Sangfor vs. VMware.</span>
+        <span class="desc">Arquitectura antes/después, diagrama de conectividad, 3 alternativas comerciales, cotización real y TCO/RTO.</span>
         <span class="meta">claude.ai/code/artifact →</span>
       </a>
       <a class="hub-card" href="https://claude.ai/code/artifact/169f561a-0585-46e0-bcd5-3501520562a6" target="_blank" rel="noopener">
@@ -182,7 +297,7 @@
       <a class="hub-card" href="https://claude.ai/code/artifact/decb377c-faf7-42e5-825c-35582f321144" target="_blank" rel="noopener">
         <span class="icon">⚖️</span>
         <span class="title">Estructura BLT–Cydesys</span>
-        <span class="desc">Modelo de Unión Temporal con distribución equilibrada de responsabilidad, beneficio e indemnidad recíproca entre ambas empresas.</span>
+        <span class="desc">Modelo de Unión Temporal con distribución equilibrada de responsabilidad, beneficio e indemnidad recíproca — validado por la respuesta oficial de la ECI.</span>
         <span class="meta">claude.ai/code/artifact →</span>
       </a>
       <a class="hub-card" href="https://claude.ai/code/artifact/a5e708f8-07e6-4932-be11-87b5c4caa70d" target="_blank" rel="noopener">
@@ -195,15 +310,16 @@
   </section>
 
   <section>
-    <h2>Cronograma vigente (TdR 31-ago-2026)</h2>
+    <h2>Cronograma vigente (TdR 31-ago-2026 + respuesta ECI 2-sep)</h2>
     <p class="section-intro">Fuente única de fechas para toda la propuesta.</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th style="width:170px">Fecha</th><th>Hito</th></tr></thead>
         <tbody>
           <tr class="done"><td class="date">19 ago 2026</td><td>Entrega de términos e invitación</td></tr>
-          <tr><td class="date">19 ago – 1 sep</td><td>Visita técnica y consultas (solo si es necesaria, previa cita) — rafael.duarte@escuelaing.edu.co, copia jimmy.ruiz@escuelaing.edu.co</td></tr>
-          <tr class="crit"><td class="date">1 sep</td><td>Cierre de consultas</td></tr>
+          <tr class="done"><td class="date">19 ago – 1 sep</td><td>Visita técnica y consultas (solo si es necesaria, previa cita) — rafael.duarte@escuelaing.edu.co, copia jimmy.ruiz@escuelaing.edu.co</td></tr>
+          <tr class="done"><td class="date">1 sep</td><td>Cierre de consultas — ✓ preguntas enviadas a la Escuela (confirmado 3-sep)</td></tr>
+          <tr class="done"><td class="date">2 sep</td><td>Respuestas de la Escuela recibidas — ✓ ver sección de respuestas oficiales arriba</td></tr>
           <tr class="crit"><td class="date">7 sep · 12:00 pm</td><td>Envío de propuesta técnica (arquitectura y modelo ofertado)</td></tr>
           <tr><td class="date">10 – 11 sep</td><td>Presentación de la propuesta técnica ante la Escuela</td></tr>
           <tr><td class="date">14 sep</td><td>Preselección de oferentes</td></tr>
@@ -211,6 +327,8 @@
           <tr class="crit"><td class="date">16 sep · 12:00 pm</td><td>Propuesta final (técnica + económica + implementación + soporte, Anexo 2 diligenciado)</td></tr>
           <tr><td class="date">21 – 24 sep</td><td>Exposición ante comité evaluador</td></tr>
           <tr><td class="date">25 sep</td><td>Selección y notificación</td></tr>
+          <tr><td class="date">Oct–Dic 2026</td><td>Inicio de aprovisionamiento, despliegue y migración (aprovechando receso académico de diciembre)</td></tr>
+          <tr class="crit"><td class="date">31 mar 2027</td><td>Fecha límite: 100% de las cargas migradas y en producción</td></tr>
         </tbody>
       </table>
     </div>
@@ -220,25 +338,26 @@
     <h2>Frentes que consumen tiempo — arrancar ya</h2>
     <p class="section-intro">Lo que no se resuelve en un día y puede volverse cuello de botella antes del 7 de septiembre.</p>
     <div class="task-list">
-      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Definir con Christian si Cydesys entra como unión temporal o subcontratista — cambia toda la redacción jurídica de la propuesta.</div><div class="who">Rodrigo + Christian</div></div><span class="days long">Bloqueante</span></div>
-      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Construir el BOM y arquitectura física con Sangfor (Andrés, Mauricio, preventa Chile) sobre los datos nuevos del TdR (RAM/CPU/red).</div><div class="who">Christian → Sangfor</div></div><span class="days long">~5-7 días</span></div>
-      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Reunir certificados jurídicos y financieros vigentes (existencia y representación, RUT, estados financieros 2025 + corte 2026).</div><div class="who">BLT / Cydesys legal-financiero</div></div><span class="days med">~3-5 días</span></div>
-      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Cotizar pólizas de seriedad de la oferta (10% del contrato) con la aseguradora.</div><div class="who">BLT</div></div><span class="days med">~3 días</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Formalizar el acuerdo de Unión Temporal BLT–Cydesys con las condiciones exactas que exige la ECI (responsabilidad solidaria, representante único, garantías unificadas, SLA único, documentación jurídica/financiera por integrante).</div><div class="who">Rodrigo + Christian + jurídico ambas partes</div></div><span class="days long">Bloqueante</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Construir el BOM y arquitectura física con Sangfor (Andrés, Mauricio, preventa Chile) sobre los datos reales del RVTools (84 cores, 66 VMs en alcance) y confirmar alcance de aSAN/aSEC.</div><div class="who">Christian → Sangfor</div></div><span class="days long">~5-7 días</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Reunir certificados jurídicos y financieros vigentes de ambas empresas (existencia y representación, RUT, estados financieros 2025 + corte 2026) — ahora exigidos por integrante, no en conjunto.</div><div class="who">BLT / Cydesys legal-financiero</div></div><span class="days med">~3-5 días</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Cotizar pólizas de seriedad de la oferta (10% del contrato) con la aseguradora — a nombre de la Unión Temporal completa, como un solo tomador.</div><div class="who">BLT + Cydesys</div></div><span class="days med">~3 días</span></div>
       <div class="task"><span class="chk"></span><div class="body"><div class="txt">Diligenciar Anexo 2 (TCO a 5 años) para las 3 alternativas comerciales, con IPC 6% y TRM $3.350 según el TdR.</div><div class="who">Rodrigo + Camilo</div></div><span class="days med">~4 días</span></div>
-      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Enviar preguntas de consulta consolidadas antes del cierre.</div><div class="who">Rodrigo</div></div><span class="days short">1 día</span></div>
-      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Preparar evidencia de seguridad (MFA, logging inmutable, alineación Ley 1581 / ISO 27001) para el criterio de arquitectura.</div><div class="who">Christian / Sangfor</div></div><span class="days med">~3 días</span></div>
+      <div class="task done"><span class="chk"></span><div class="body"><div class="txt">Enviar preguntas de consulta consolidadas antes del cierre. — ✓ Enviadas a la Escuela (confirmado por Rodrigo, 3-sep) y respondidas por la ECI.</div><div class="who">Rodrigo</div></div><span class="days short">Completo ✓</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Preguntar a la Escuela si los 3 hosts standalone fuera del clúster HCI (10.1.0.24/25/26, ESXi 6.5) quedan fuera del alcance de forma permanente.</div><div class="who">Rodrigo</div></div><span class="days short">1 día</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Preparar evidencia de seguridad (MFA, logging inmutable, alineación Ley 1581 / ISO 27001, microsegmentación) para el criterio de arquitectura — ahora con valoración explícita confirmada por la Escuela.</div><div class="who">Christian / Sangfor</div></div><span class="days med">~3 días</span></div>
     </div>
   </section>
 
   <section>
     <h2>Arquitectura — lo que hay que tener presente</h2>
     <div class="arch-grid">
-      <div class="arch-card"><h4>Origen: VMware ESXi 7.0.3 / vCenter 7</h4><p>4 nodos Dell (2× R740XD, 2× R740), 384GB RAM/nodo, vSAN 61.44TB brutos, switch Extreme 48×10Gbps (24 en uso).</p></div>
-      <div class="arch-card"><h4>Destino: neutral por diseño</h4><p>El TdR admite HCI, 3 capas, nube privada/tercero, IaaS, PaaS o híbrido — la propuesta debe ganar por resultado, no por parecerse a Sangfor de entrada.</p></div>
-      <div class="arch-card"><h4>Migración</h4><p>Coexistencia temporal permitida; minimizar ventana de corte; tratamiento diferenciado para cargas legacy (CentOS 6.x, Windows Server 2012 R2).</p></div>
-      <div class="arch-card"><h4>Red</h4><p>Mínimo 10 Gbps redundante entre cómputo y almacenamiento, con capacidad de crecer a 25/40 Gbps — validar si el switch actual alcanza o hay que renovarlo.</p></div>
-      <div class="arch-card"><h4>Seguridad</h4><p>MFA + logging inmutable + Ley 1581/2012 + ISO 27001 — evidencia documental exigida, no basta con declararlo.</p></div>
-      <div class="arch-card"><h4>Cargas fuera del clúster</h4><p>Core académico en Oracle OCI, web en AWS, calidad en Azure — confirmar si entran al alcance del dimensionamiento a 5 años.</p></div>
+      <div class="arch-card"><h4>Origen: VMware ESXi 7.0.3 / vCenter 7</h4><p>4 nodos Dell (2× R740XD, 2× R740), 384GB RAM/nodo, 84 cores físicos reales, vSAN ~71% de uso hoy, switch Extreme 48×10Gbps (24 en uso). Clúster reportado en estado de alerta ("red") por vCenter.</p></div>
+      <div class="arch-card"><h4>Destino: neutral por diseño</h4><p>El TdR admite HCI, 3 capas, nube privada/tercero, IaaS, PaaS o híbrido — la propuesta debe ganar por resultado, no por parecerse a Sangfor de entrada. Confirmado: libertad total de número de nodos.</p></div>
+      <div class="arch-card"><h4>Migración</h4><p>66 VMs dentro de alcance (no ~62); ~19 VMs adicionales en 3 hosts standalone fuera del clúster HCI quedan fuera del dimensionamiento — validar con la Escuela si es definitivo.</p></div>
+      <div class="arch-card"><h4>Red</h4><p>Mínimo 10 Gbps redundante entre cómputo y almacenamiento, con capacidad de crecer a 25/40 Gbps — diagrama de conectividad ya construido en la Solución.</p></div>
+      <div class="arch-card"><h4>Seguridad</h4><p>MFA + logging inmutable + Ley 1581/2012 + ISO 27001 + microsegmentación — todo con valoración explícita confirmada por la Escuela, evidencia documental exigida.</p></div>
+      <div class="arch-card"><h4>Continuidad (BIA Sonda 2022)</h4><p>El clúster HCI actual es infraestructura Tier-1 (RTO &lt;4h) según el propio BIA de la Escuela — respalda el diseño de HA propuesto, que supera ese umbral por amplio margen.</p></div>
     </div>
   </section>
 
@@ -254,11 +373,9 @@
   </section>
 
   <footer>
-    Fuente: TdR "Modernización de la plataforma de procesamiento y almacenamiento de datos del datacenter institucional", versión 31 de agosto de 2026 · Escuela Colombiana de Ingeniería Julio Garavito · Blue Label Technologies
+    Fuente: TdR "Modernización de la plataforma de procesamiento y almacenamiento de datos del datacenter institucional", versión 31 de agosto de 2026 · Respuestas oficiales de la ECI (2-sep-2026) · BIA Tecnológico Sonda de Colombia (2022) · Inventario RVTools (2-sep-2026) · Escuela Colombiana de Ingeniería Julio Garavito · Blue Label Technologies
   </footer>
 
 </div>
-
-
 </body>
 </html>
