@@ -155,19 +155,20 @@
     <div class="changelog">
       <h3>⚠️ Cambios que afectan lo que ya teníamos armado</h3>
       <ul>
+        <li><b>Alcance corregido — solo virtualización, no HCI completa:</b> la ECI confirmó que únicamente necesita virtualización de cómputo y red (aSV + aNet) sobre un clúster de <b>4 nodos</b>, manteniendo su almacenamiento externo/existente — sin aSAN/aStor ni aSEC como parte de esta fase. Ya corregido en la Solución y en la presentación.</li>
         <li><b>Cronograma corrido ~5 días:</b> propuesta técnica ahora el 7-sep (antes 2-sep), propuesta final el 16-sep (antes 14-sep). Ya corregido en el artefacto de preguntas.</li>
         <li><b>Alcance ampliado explícitamente:</b> el TdR ahora acepta HCI, infraestructura de 3 capas, nube privada, nube pública IaaS, PaaS e híbridos — no solo HCI. Confirma que nuestras 3 alternativas siguen vigentes y abre la puerta a jugar la carta híbrida si conviene.</li>
         <li><b>Datos técnicos nuevos:</b> 384 GB RAM/nodo (1.536 TB agregados), CPU Xeon Silver 4214/4114 @ 2.20GHz (8 sockets), 6 interfaces 10 Gbps por nodo.</li>
         <li><b>Evaluación con el 100% desglosado:</b> arquitectura 30% + TCO 20% + PoC 15% + SLA 15% + <b>experiencia 10%</b> + <b>implementación/migración 5%</b> + <b>valores agregados 5%</b>.</li>
-        <li><b>Solución técnica y TCO/RTO actualizados:</b> el dimensionamiento (cómputo, RAM, storage, red) y la estructura del cotizador Sangfor vs. VMware ya reflejan estos datos — ver el documento de Solución.</li>
+        <li><b>Solución técnica y TCO/RTO actualizados:</b> el dimensionamiento (cómputo, RAM, red) y la estructura del cotizador Sangfor vs. VMware ya reflejan estos datos — ver el documento de Solución.</li>
         <li><b>Arquitectura de red visual:</b> nuevo diagrama de conectividad del clúster (nodos, switches redundantes, core, firewall) y camino de crecimiento 10G→25/40G.</li>
         <li><b>Servidores de última generación:</b> sin importar la marca (Dell/HPE/Lenovo), la oferta debe usar siempre el modelo más reciente disponible al cotizar — nunca hardware en fin de vida.</li>
         <li><b>Estructura BLT–Cydesys rehecha:</b> modelo de Unión Temporal con responsabilidad y beneficio repartidos de forma equilibrada entre ambas empresas — validado además por la respuesta oficial de la ECI (ver abajo).</li>
-        <li><b>Cotización real de Sangfor recibida:</b> licenciamiento + soporte + migración, vía EVOCOM — con 2 alertas por validar (appliance testigo de 2 nodos, y alcance de storage/seguridad del bundle) y a la espera de la propuesta de arquitectura física de Christian. Detalle de precio en documento comercial reservado.</li>
+        <li><b>Cotización real de Sangfor recibida:</b> licenciamiento + soporte + migración, vía EVOCOM — con la alerta del appliance testigo de 2 nodos por validar y a la espera de la propuesta de arquitectura física de Christian sobre 4 nodos. Detalle de precio en documento comercial reservado.</li>
         <li><b>Redimensionamiento con datos reales:</b> el dimensionamiento se recalculó con los 84 cores físicos y las 66 VMs confirmados por RVTools — el objetivo de holgura pasa a ~120-130 cores útiles, ya validado en el documento de Solución.</li>
         <li><b>Diagramas técnicos de Sangfor incorporados:</b> extraídos directamente del notebook de preventa Sangfor — tabla de equivalencia completa vs. VMware, comparativo Scale-Up vs. Scale-Out, y caso real de cliente (Global Business Power) con resultados medibles.</li>
         <li><b>Gráfico de escalamiento rediseñado:</b> el comparativo Scale-Up vs. Scale-Out se reconstruyó con series indexadas en un solo eje (sin mezclar TB con IOPS) para que se lea con claridad.</li>
-        <li><b>Presentación de la solución generada:</b> deck de 12 diapositivas armado en NotebookLM con imágenes, ventajas frente a VMware y tendencias de mercado — lista para incluir en el documento de entrega técnica, descargable en PDF y PPTX.</li>
+        <li><b>Presentación de la solución regenerada:</b> deck armado en NotebookLM con el alcance corregido (virtualización aSV+aNet sobre 4 nodos, sin HCI completa), imágenes, ventajas frente a VMware y tendencias de mercado — descargable en PDF y PPTX.</li>
       </ul>
     </div>
   </section>
@@ -223,8 +224,8 @@
     <div class="callout ok" style="margin-top:1rem;">
       <h3>✅ Hallazgo clave a favor de nuestra propuesta</h3>
       <ul>
-        <li>Los <b>cuatro nodos de hiperconvergencia actuales</b> (DNS, DHCP, Proxy Web, servicios core) están clasificados en el tier más exigente: <b>recuperación en menos de 4 horas</b>. También vCenter, el firewall perimetral y los servidores de aplicaciones/BD de Oracle.</li>
-        <li>Esto confirma que el clúster que estamos modernizando es, en la propia clasificación de la Escuela, <b>infraestructura crítica Tier-1</b> — respalda directamente nuestro diseño de HA (tolerancia a 2 nodos, live migration, CDP con RPO≈0 y RTO de segundos a 30 min), que supera ampliamente el umbral de 4 horas que la ECI exige como mínimo aceptable.</li>
+        <li>Los <b>cuatro nodos de virtualización actuales</b> (DNS, DHCP, Proxy Web, servicios core) están clasificados en el tier más exigente: <b>recuperación en menos de 4 horas</b>. También vCenter, el firewall perimetral y los servidores de aplicaciones/BD de Oracle.</li>
+        <li>Esto confirma que el clúster que estamos modernizando es, en la propia clasificación de la Escuela, <b>infraestructura crítica Tier-1</b> — respalda directamente nuestro diseño de HA (tolerancia a falla de nodo, live migration, CDP con RPO≈0 y RTO de segundos a 30 min), que supera ampliamente el umbral de 4 horas que la ECI exige como mínimo aceptable.</li>
         <li>El 51% de las aplicaciones y el 61% de las bases de datos pueden tolerar indisponibilidad de más de 3 semanas — la migración puede secuenciarse con amplio margen para las cargas no críticas, dejando el foco de cuidado real en un grupo acotado de sistemas.</li>
       </ul>
     </div>
@@ -240,12 +241,12 @@
     <div class="stat-row">
       <div class="stat-card"><span class="n">66</span><span class="l">VMs dentro del alcance de dimensionamiento (vs. "~62" estimado antes)</span></div>
       <div class="stat-card"><span class="n">~19</span><span class="l">VMs explícitamente fuera de alcance (investigación, demos, pruebas descontinuadas)</span></div>
-      <div class="stat-card"><span class="n">84</span><span class="l">cores físicos reales en el clúster vSAN (4 nodos), no ~88 como se estimaba</span></div>
-      <div class="stat-card"><span class="n">71%</span><span class="l">uso real de storage vSAN hoy (vs. 67% citado en el TdR) — sigue subiendo</span></div>
+      <div class="stat-card"><span class="n">84</span><span class="l">cores físicos reales en el clúster de 4 nodos actual, no ~88 como se estimaba</span></div>
+      <div class="stat-card"><span class="n">71%</span><span class="l">uso real de storage hoy (vs. 67% citado en el TdR) — sigue subiendo</span></div>
     </div>
     <div class="callout crit" style="margin-top:1rem;">
       <span class="tag"></span>
-      <h3>🔴 Hallazgo nuevo: 3 hosts adicionales fuera del clúster HCI</h3>
+      <h3>🔴 Hallazgo nuevo: 3 hosts adicionales fuera del clúster</h3>
       <p style="margin:0; font-size:.88rem; color:var(--text-soft);">El export de RVTools revela <b style="color:var(--text);">tres servidores ESXi standalone que el TdR no menciona</b>, corriendo VMware ESXi 6.5 (fuera de soporte extendido) y hospedando las ~19 VMs marcadas como "fuera del dimensionamiento" (investigación, demos Oracle, servidores de impresión, Sharepoint legacy):</p>
       <ul style="margin:.6rem 0 0;">
         <li><b>10.1.0.24</b> — Lenovo ThinkSystem ST550, Xeon Silver 4110, 16 cores, 256 GB RAM.</li>
@@ -283,7 +284,7 @@
       <a class="hub-card" href="https://claude.ai/code/artifact/61bee825-b1a5-4773-bbbc-d2f2ef29a97d" target="_blank" rel="noopener">
         <span class="icon">🏗️</span>
         <span class="title">Solución Sangfor ECI</span>
-        <span class="desc">Arquitectura antes/después, diagrama de conectividad, 3 alternativas comerciales, ANS/SLA y metodología TCO/RTO.</span>
+        <span class="desc">Alcance confirmado: virtualización (aSV+aNet) sobre 4 nodos, sin HCI completa. Arquitectura, 3 alternativas comerciales, ANS/SLA y metodología TCO/RTO. Con botón de descarga de la presentación.</span>
         <span class="meta">claude.ai/code/artifact →</span>
       </a>
       <a class="hub-card" href="https://claude.ai/code/artifact/51d2608a-64f5-4f01-8cda-187f6c5ef2db" target="_blank" rel="noopener">
@@ -292,13 +293,13 @@
         <span class="desc">Mapa capítulo por capítulo de lo que hay que radicar, cruzado con el peso de evaluación del TdR y lo que falta de Christian/Cydesys. Descargable en Word.</span>
         <span class="meta">claude.ai/code/artifact · descargar .docx →</span>
       </a>
-      <a class="hub-card" href="https://rlozano72-web.github.io/blt-eci-portal/Solucion-Sangfor-ECI-presentacion.pdf" target="_blank" rel="noopener">
+      <a class="hub-card" href="https://rlozano72-web.github.io/blt-eci-portal/Solucion-Sangfor-ECI-presentacion-v2.pdf" target="_blank" rel="noopener">
         <span class="icon">🖥️</span>
-        <span class="title">Presentación de la solución (12 diapositivas)</span>
-        <span class="desc">Arquitectura Sangfor HCI, ventajas frente a VMware, tendencias del mercado post-Broadcom, HA/DR, seguridad y migración por fases — generada en NotebookLM con imágenes de apoyo, alineada al TdR.</span>
+        <span class="title">Presentación de la solución (alcance corregido)</span>
+        <span class="desc">Virtualización aSV+aNet sobre 4 nodos, sin HCI completa — ventajas frente a VMware, tendencias post-Broadcom, HA/DR, migración por fases. Generada en NotebookLM con imágenes, alineada al TdR.</span>
         <span class="meta">descargar PDF →</span>
       </a>
-      <a class="hub-card" href="https://rlozano72-web.github.io/blt-eci-portal/Solucion-Sangfor-ECI-presentacion.pptx" target="_blank" rel="noopener">
+      <a class="hub-card" href="https://rlozano72-web.github.io/blt-eci-portal/Solucion-Sangfor-ECI-presentacion-v2.pptx" target="_blank" rel="noopener">
         <span class="icon">📊</span>
         <span class="title">Presentación de la solución (editable)</span>
         <span class="desc">Mismo contenido en PowerPoint para ajustar antes de incluirla en el documento de entrega técnica.</span>
@@ -361,12 +362,12 @@
     <p class="section-intro">Lo que no se resuelve en un día y puede volverse cuello de botella antes del 7 de septiembre.</p>
     <div class="task-list">
       <div class="task"><span class="chk"></span><div class="body"><div class="txt">Formalizar el acuerdo de Unión Temporal BLT–Cydesys con las condiciones exactas que exige la ECI (responsabilidad solidaria, representante único, garantías unificadas, SLA único, documentación jurídica/financiera por integrante).</div><div class="who">Rodrigo + Christian + jurídico ambas partes</div></div><span class="days long">Bloqueante</span></div>
-      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Construir el BOM y arquitectura física con Sangfor (Andrés, Mauricio, preventa Chile) sobre los datos reales del RVTools (84 cores, 66 VMs en alcance) y confirmar alcance de aSAN/aSEC.</div><div class="who">Christian → Sangfor</div></div><span class="days long">~5-7 días</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Construir el BOM y arquitectura física con Sangfor (Andrés, Mauricio, preventa Chile) sobre los datos reales del RVTools (84 cores, 66 VMs en alcance) para un clúster de 4 nodos con aSV+aNet.</div><div class="who">Christian → Sangfor</div></div><span class="days long">~5-7 días</span></div>
       <div class="task"><span class="chk"></span><div class="body"><div class="txt">Reunir certificados jurídicos y financieros vigentes de ambas empresas (existencia y representación, RUT, estados financieros 2025 + corte 2026) — ahora exigidos por integrante, no en conjunto.</div><div class="who">BLT / Cydesys legal-financiero</div></div><span class="days med">~3-5 días</span></div>
       <div class="task"><span class="chk"></span><div class="body"><div class="txt">Cotizar pólizas de seriedad de la oferta (10% del contrato) con la aseguradora — a nombre de la Unión Temporal completa, como un solo tomador.</div><div class="who">BLT + Cydesys</div></div><span class="days med">~3 días</span></div>
       <div class="task"><span class="chk"></span><div class="body"><div class="txt">Diligenciar Anexo 2 (TCO a 5 años) para las 3 alternativas comerciales, con IPC 6% y TRM $3.350 según el TdR.</div><div class="who">Rodrigo + Camilo</div></div><span class="days med">~4 días</span></div>
       <div class="task done"><span class="chk"></span><div class="body"><div class="txt">Enviar preguntas de consulta consolidadas antes del cierre. — ✓ Enviadas a la Escuela (confirmado por Rodrigo, 3-sep) y respondidas por la ECI.</div><div class="who">Rodrigo</div></div><span class="days short">Completo ✓</span></div>
-      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Preguntar a la Escuela si los 3 hosts standalone fuera del clúster HCI (10.1.0.24/25/26, ESXi 6.5) quedan fuera del alcance de forma permanente.</div><div class="who">Rodrigo</div></div><span class="days short">1 día</span></div>
+      <div class="task"><span class="chk"></span><div class="body"><div class="txt">Preguntar a la Escuela si los 3 hosts standalone fuera del clúster (10.1.0.24/25/26, ESXi 6.5) quedan fuera del alcance de forma permanente.</div><div class="who">Rodrigo</div></div><span class="days short">1 día</span></div>
       <div class="task"><span class="chk"></span><div class="body"><div class="txt">Preparar evidencia de seguridad (MFA, logging inmutable, alineación Ley 1581 / ISO 27001, microsegmentación) para el criterio de arquitectura — ahora con valoración explícita confirmada por la Escuela.</div><div class="who">Christian / Sangfor</div></div><span class="days med">~3 días</span></div>
     </div>
   </section>
@@ -374,12 +375,12 @@
   <section>
     <h2>Arquitectura — lo que hay que tener presente</h2>
     <div class="arch-grid">
-      <div class="arch-card"><h4>Origen: VMware ESXi 7.0.3 / vCenter 7</h4><p>4 nodos Dell (2× R740XD, 2× R740), 384GB RAM/nodo, 84 cores físicos reales, vSAN ~71% de uso hoy, switch Extreme 48×10Gbps (24 en uso). Clúster reportado en estado de alerta ("red") por vCenter.</p></div>
-      <div class="arch-card"><h4>Destino: neutral por diseño</h4><p>El TdR admite HCI, 3 capas, nube privada/tercero, IaaS, PaaS o híbrido — la propuesta debe ganar por resultado, no por parecerse a Sangfor de entrada. Confirmado: libertad total de número de nodos.</p></div>
-      <div class="arch-card"><h4>Migración</h4><p>66 VMs dentro de alcance (no ~62); ~19 VMs adicionales en 3 hosts standalone fuera del clúster HCI quedan fuera del dimensionamiento — validar con la Escuela si es definitivo.</p></div>
+      <div class="arch-card"><h4>Origen: VMware ESXi 7.0.3 / vCenter 7</h4><p>4 nodos Dell (2× R740XD, 2× R740), 384GB RAM/nodo, 84 cores físicos reales, storage ~71% de uso hoy, switch Extreme 48×10Gbps (24 en uso). Clúster reportado en estado de alerta ("red") por vCenter.</p></div>
+      <div class="arch-card"><h4>Destino: virtualización, no HCI completa</h4><p>Alcance confirmado con la ECI: clúster de <b>4 nodos</b> con aSV (cómputo) + aNet (red) únicamente, storage externo/existente de la Escuela — sin aSAN/aStor ni aSEC en esta fase.</p></div>
+      <div class="arch-card"><h4>Migración</h4><p>66 VMs dentro de alcance (no ~62); ~19 VMs adicionales en 3 hosts standalone fuera del clúster quedan fuera del dimensionamiento — validar con la Escuela si es definitivo.</p></div>
       <div class="arch-card"><h4>Red</h4><p>Mínimo 10 Gbps redundante entre cómputo y almacenamiento, con capacidad de crecer a 25/40 Gbps — diagrama de conectividad ya construido en la Solución.</p></div>
       <div class="arch-card"><h4>Seguridad</h4><p>MFA + logging inmutable + Ley 1581/2012 + ISO 27001 + microsegmentación — todo con valoración explícita confirmada por la Escuela, evidencia documental exigida.</p></div>
-      <div class="arch-card"><h4>Continuidad (BIA Sonda 2022)</h4><p>El clúster HCI actual es infraestructura Tier-1 (RTO &lt;4h) según el propio BIA de la Escuela — respalda el diseño de HA propuesto, que supera ese umbral por amplio margen.</p></div>
+      <div class="arch-card"><h4>Continuidad (BIA Sonda 2022)</h4><p>El clúster actual es infraestructura Tier-1 (RTO &lt;4h) según el propio BIA de la Escuela — respalda el diseño de HA propuesto, que supera ese umbral por amplio margen.</p></div>
     </div>
   </section>
 
@@ -399,9 +400,6 @@
   </footer>
 
 </div>
-
-
-
 
 </body>
 </html>
