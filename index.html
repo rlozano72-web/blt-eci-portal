@@ -216,11 +216,18 @@
       <div class="hub-card" style="--cat:var(--accent);">
         <span class="icon">🏗️</span>
         <span class="title">Presentación técnica final (Sangfor + HPE)</span>
-        <span class="desc">Deck consolidado, listo para radicar el 7 de septiembre: virtualización Sangfor sobre la arquitectura HPE recomendada.</span>
+        <span class="desc">Deck consolidado v2, listo para radicar el 7 de septiembre: apertura "Quiénes somos" con el perfil real de BLT y de Cydesys (Unión Temporal), diagnóstico, arquitectura HPE, virtualización Sangfor, HA/DR, migración, ANS y cierre.</span>
         <div class="fmt-row">
           <a class="fmt pdf" href="https://rlozano72-web.github.io/blt-eci-portal/Propuesta-Tecnica-Final-ECI.pdf" target="_blank" rel="noopener">↓ PDF</a>
           <a class="fmt pptx" href="https://rlozano72-web.github.io/blt-eci-portal/Propuesta-Tecnica-Final-ECI.pptx" target="_blank" rel="noopener">↓ PPTX</a>
         </div>
+        <ul style="margin:.3rem 0 0; padding-left:1.05rem; font-size:.78rem; line-height:1.5;">
+          <li style="color:var(--ok);">✓ Quiénes somos / antecedentes (BLT + Cydesys)</li>
+          <li style="color:var(--ok);">✓ Diagnóstico de infraestructura actual</li>
+          <li style="color:var(--ok);">✓ Arquitectura HPE + virtualización Sangfor</li>
+          <li style="color:var(--ok);">✓ HA/DR, migración, respaldo, ANS y cierre</li>
+          <li style="color:var(--crit); font-weight:600;">✗ Falta decidir HPE vs. Dell para diligenciar el Anexo 2 (TCO)</li>
+        </ul>
       </div>
       <div class="hub-card" style="--cat:var(--pdf);">
         <span class="icon">🖥️</span>
@@ -366,6 +373,7 @@
       <h3>⚠️ Cambios que afectan lo que ya teníamos armado</h3>
       <ul>
         <li><b>Presentación técnica final consolidada:</b> se integró en un solo deck la solución de virtualización Sangfor (aSV+aNet) con la arquitectura de hardware HPE recomendada por Cydesys — lista para incluir en la propuesta técnica del 7 de septiembre, publicada en el portal.</li>
+        <li><b>Actualización 5-sep:</b> se añadió al inicio del deck la sección "Quiénes somos / Antecedentes" con el perfil real de Blue Label Technologies (sitio web) y de Cydesys (brochure oficial, +50 años, +1.800 clientes) presentando la Unión Temporal como proponente. Sin cifras de precio.</li>
         <li><b>Alcance corregido — solo virtualización, no HCI completa:</b> la ECI confirmó que únicamente necesita virtualización de cómputo y red (aSV + aNet) sobre un clúster de <b>4 nodos</b>, manteniendo su almacenamiento externo/existente — sin aSAN/aStor ni aSEC como parte de esta fase. Ya corregido en la Solución y en la presentación.</li>
         <li><b>Cronograma corrido ~5 días:</b> propuesta técnica ahora el 7-sep (antes 2-sep), propuesta final el 16-sep (antes 14-sep). Ya corregido en el artefacto de preguntas.</li>
         <li><b>Alcance ampliado explícitamente:</b> el TdR ahora acepta HCI, infraestructura de 3 capas, nube privada, nube pública IaaS, PaaS e híbridos — no solo HCI. Confirma que nuestras 3 alternativas siguen vigentes y abre la puerta a jugar la carta híbrida si conviene.</li>
