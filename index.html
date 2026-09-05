@@ -67,6 +67,19 @@
   .featured-card .desc{ font-size:.87rem; color:var(--text-soft); }
   .featured-card .fmt-row{ display:flex; gap:.4rem; flex-wrap:wrap; margin-top:auto; padding-top:.5rem; }
 
+  /* priority summary */
+  .priority-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1rem; }
+  .priority-card{ border-radius:14px; padding:1.2rem 1.4rem; border:1px solid var(--border); }
+  .priority-card h3{ margin:0 0 .7rem; font-size:.95rem; display:flex; align-items:center; gap:.5rem; }
+  .priority-card ul{ margin:0; padding-left:1.15rem; display:flex; flex-direction:column; gap:.5rem; font-size:.86rem; }
+  .priority-card li b{ color:var(--text); }
+  .priority-card.crit{ background:var(--crit-soft); border-color:#F3C6C2; }
+  .priority-card.crit h3{ color:var(--crit); }
+  .priority-card.warn{ background:var(--warn-soft); border-color:#F0D3B8; }
+  .priority-card.warn h3{ color:var(--warn); }
+  .priority-card.ok{ background:var(--ok-soft); border-color:#BFE6D6; }
+  .priority-card.ok h3{ color:var(--ok); }
+
   /* completion summary */
   .compliance-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1rem; }
   .compliance-card{ background:var(--bg-raised); border:1px solid var(--border); border-radius:16px; padding:1.4rem 1.3rem; text-align:center; box-shadow:var(--shadow); }
@@ -283,6 +296,41 @@
         <span class="desc">Alternativa sin límites de edición simultánea para Camilo, Christian y Rodrigo — mismas 35+15 preguntas.</span>
         <div class="fmt-row"><span class="fmt web">GOOGLE SHEETS</span></div>
       </a>
+    </div>
+  </section>
+
+  <section>
+    <h2>🎯 Qué falta para una oferta exitosa</h2>
+    <p class="section-intro">Organizado por urgencia — la parte técnica ya está lista al 100%; lo que queda es cerrar la Unión Temporal y los trámites comerciales/jurídicos de última milla.</p>
+    <div class="priority-grid">
+      <div class="priority-card crit">
+        <h3>🔴 Bloqueantes para el 7 de septiembre</h3>
+        <ul>
+          <li><b>Renovar la Cámara de Comercio de BLT y de Cydesys</b> — ambas vencidas para la fecha de cierre (el TdR exige máximo 30 días de antigüedad).</li>
+          <li><b>Verificar el contenido real de los estados financieros de BLT</b> — el archivo recibido no dejó leer las cifras.</li>
+          <li><b>Reenviar la cédula del representante legal</b> (Camilo Gómez Uribe) — el archivo llegó vacío.</li>
+          <li><b>Formalizar el acuerdo de Unión Temporal BLT–Cydesys</b> — responsabilidad solidaria, representante único, garantías unificadas, SLA único.</li>
+          <li><b>Transcribir el cumplimiento técnico al formato oficial del Anexo 4</b> — el contenido ya existe en la Solución.</li>
+        </ul>
+      </div>
+      <div class="priority-card warn">
+        <h3>🟡 Necesarios, probablemente con plazo hasta el 16-sep</h3>
+        <ul>
+          <li><b>Póliza de seriedad de la oferta (10%)</b> — no existe ni cotización. Iniciar ya, puede tardar días.</li>
+          <li><b>Carta de aval del fabricante</b> — de Sangfor (software) y de HPE (hardware recomendado).</li>
+          <li><b>Compromiso de Integridad / Anexo 5-6</b> — plantilla existe, falta firmarla.</li>
+          <li><b>Borrador de contrato</b> con los productos/servicios ofertados.</li>
+          <li><b>Anexo 2 (TCO a 5 años)</b> — depende de cerrar la decisión HPE vs. Dell.</li>
+        </ul>
+      </div>
+      <div class="priority-card ok">
+        <h3>🟢 Decisión estratégica pendiente</h3>
+        <ul>
+          <li><b>Elegir entre Opción A (HPE)</b> — nueva, cumple el Anexo 4 sin riesgo — <b>u Opción B (Dell)</b> — más barata pero no cumple Gen5+/DDR5 — o presentar ambas.</li>
+          <li><b>Validar con la ECI</b> si los habilitantes jurídicos/financieros aplican al 7-sep o solo al 16-sep, para no arriesgar nada.</li>
+          <li><b>Nota sobre experiencia:</b> las 3 cartas de referencia (Medisinu, Indigo, Cydesys) son de ciberseguridad, no de virtualización/HCI — confirmar si el TdR exige coincidencia de tipo de proyecto.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
