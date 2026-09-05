@@ -17,7 +17,12 @@
     --warn:#B4560D; --warn-soft:#FBEEE2;
     --crit:#A32F2F; --crit-soft:#FBEAEA;
     --done:#6B3FA0; --done-soft:#F1EBFA;
+    --pdf:#C4291E; --pdf-soft:#FBEAE8;
+    --pptx:#C1440E; --pptx-soft:#FCEEE5;
+    --docx:#1857B8; --docx-soft:#E9F0FC;
+    --web:#0E8A5F; --web-soft:#E4F6EE;
     --shadow: 0 1px 2px rgba(11,94,215,0.05), 0 10px 28px rgba(11,94,215,0.07);
+    --shadow-lg: 0 4px 10px rgba(11,94,215,0.08), 0 20px 44px rgba(11,94,215,0.12);
   }
   *{ box-sizing:border-box; }
   body{ margin:0; background:var(--bg); color:var(--text); font-family:'IBM Plex Sans', system-ui, sans-serif; line-height:1.55; font-size:15.5px; }
@@ -42,14 +47,37 @@
   h2{ font-size:1.15rem; font-weight:700; margin:0 0 .3rem; letter-spacing:-.005em; }
   .section-intro{ color:var(--text-soft); font-size:.9rem; margin:0 0 1.2rem; max-width:72ch; }
 
+  /* format badges */
+  .fmt{ display:inline-flex; align-items:center; gap:.3rem; font-family:'IBM Plex Mono'; font-size:.66rem; font-weight:700; letter-spacing:.03em; padding:.16rem .55rem; border-radius:99px; white-space:nowrap; }
+  .fmt.pdf{ background:var(--pdf-soft); color:var(--pdf); }
+  .fmt.pptx{ background:var(--pptx-soft); color:var(--pptx); }
+  .fmt.docx{ background:var(--docx-soft); color:var(--docx); }
+  .fmt.web{ background:var(--web-soft); color:var(--web); }
+  .fmt::before{ content:''; width:5px; height:5px; border-radius:99px; background:currentColor; }
+
+  /* featured "review now" strip */
+  .featured-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1.1rem; }
+  .featured-card{ position:relative; display:flex; flex-direction:column; gap:.7rem; background:var(--bg-raised); border:1px solid var(--border); border-radius:18px; padding:1.5rem 1.6rem; text-decoration:none; box-shadow:var(--shadow-lg); overflow:hidden; transition:transform .15s ease, box-shadow .15s ease; }
+  .featured-card:hover{ transform:translateY(-3px); }
+  .featured-card::before{ content:''; position:absolute; top:0; left:0; right:0; height:6px; background:var(--bar,var(--accent)); }
+  .featured-card .kicker{ font-family:'IBM Plex Mono'; font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--bar,var(--accent)); }
+  .featured-card .icon-row{ display:flex; align-items:center; justify-content:space-between; }
+  .featured-card .icon{ font-size:2rem; line-height:1; }
+  .featured-card .title{ font-weight:700; font-size:1.18rem; color:var(--text); letter-spacing:-.01em; }
+  .featured-card .desc{ font-size:.87rem; color:var(--text-soft); }
+  .featured-card .fmt-row{ display:flex; gap:.4rem; flex-wrap:wrap; margin-top:auto; padding-top:.5rem; }
+
   /* nav cards to other artifacts */
-  .hub-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:1rem; }
-  .hub-card{ display:flex; flex-direction:column; gap:.55rem; background:var(--bg-raised); border:1px solid var(--border); border-radius:14px; padding:1.3rem 1.4rem; text-decoration:none; box-shadow:var(--shadow); transition:transform .15s ease, border-color .15s ease; }
-  .hub-card:hover{ transform:translateY(-2px); border-color:var(--accent); }
+  .hub-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1rem; }
+  .hub-card{ display:flex; flex-direction:column; gap:.55rem; background:var(--bg-raised); border:1px solid var(--border); border-left:4px solid var(--cat,var(--border)); border-radius:14px; padding:1.2rem 1.3rem; text-decoration:none; box-shadow:var(--shadow); transition:transform .15s ease, border-color .15s ease; }
+  .hub-card:hover{ transform:translateY(-2px); }
   .hub-card .icon{ font-size:1.4rem; }
   .hub-card .title{ font-weight:700; font-size:1.02rem; color:var(--text); }
   .hub-card .desc{ font-size:.85rem; color:var(--text-soft); }
-  .hub-card .meta{ margin-top:.3rem; font-family:'IBM Plex Mono'; font-size:.72rem; color:var(--accent); }
+  .hub-card .fmt-row{ margin-top:.2rem; display:flex; gap:.4rem; flex-wrap:wrap; }
+
+  .cat-label{ font-family:'IBM Plex Mono'; font-size:.68rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--text-faint); margin:1.6rem 0 .7rem; display:flex; align-items:center; gap:.5rem; }
+  .cat-label .dot{ width:8px; height:8px; border-radius:99px; background:var(--cat,var(--text-faint)); }
 
   /* changelog callout */
   .changelog{ background:var(--warn-soft); border:1px solid #F0D3B8; border-radius:14px; padding:1.3rem 1.5rem; }
@@ -175,6 +203,34 @@
     </div>
   </section>
 
+  <section>
+    <h2>📌 Revisar primero</h2>
+    <p class="section-intro">Los tres documentos con las decisiones más recientes — empieza por aquí.</p>
+    <div class="featured-grid">
+      <a class="featured-card" style="--bar:var(--crit);" href="https://rlozano72-web.github.io/blt-eci-portal/checklist-cierre-propuesta-eci.docx" target="_blank" rel="noopener">
+        <span class="kicker">Bloqueante · acción inmediata</span>
+        <div class="icon-row"><span class="icon">🚨</span></div>
+        <span class="title">Checklist de cierre de propuesta</span>
+        <span class="desc">Qué falta para poder radicar: documentos de BLT ausentes, Cámara de Comercio vencida, sin póliza de seriedad ni certificados de experiencia.</span>
+        <div class="fmt-row"><span class="fmt docx">DOCX</span></div>
+      </a>
+      <a class="featured-card" style="--bar:var(--accent);" href="https://claude.ai/code/artifact/61bee825-b1a5-4773-bbbc-d2f2ef29a97d" target="_blank" rel="noopener">
+        <span class="kicker">Núcleo técnico</span>
+        <div class="icon-row"><span class="icon">🏗️</span></div>
+        <span class="title">Solución Sangfor ECI</span>
+        <span class="desc">Alcance confirmado, arquitectura, ANS/SLA, dos rutas de hardware ya cotizadas y botón de descarga de la presentación.</span>
+        <div class="fmt-row"><span class="fmt web">ARTEFACTO</span></div>
+      </a>
+      <a class="featured-card" style="--bar:var(--pptx);" href="https://rlozano72-web.github.io/blt-eci-portal/Arquitectura-HW-HPE-Dell-ECI.pdf" target="_blank" rel="noopener">
+        <span class="kicker">Decisión pendiente</span>
+        <div class="icon-row"><span class="icon">🖧</span></div>
+        <span class="title">HPE vs. Dell — comparativo de hardware</span>
+        <span class="desc">Las dos rutas cotizadas por Cydesys, una a una: cuál cumple el Anexo 4 sin riesgo y cuál es más barata pero arriesgada.</span>
+        <div class="fmt-row"><span class="fmt pdf">PDF</span><span class="fmt pptx">PPTX</span></div>
+      </a>
+    </div>
+  </section>
+
   <section id="respuestas-eci">
     <h2>Respuestas oficiales de la ECI a nuestras preguntas (recibidas 2-sep)</h2>
     <p class="section-intro">La Escuela respondió el cuestionario formal de consulta. Estas respuestas destraban varias decisiones de diseño y de estructura jurídica que teníamos abiertas.</p>
@@ -269,85 +325,89 @@
 
   <section>
     <h2>Documentos de trabajo</h2>
-    <p class="section-intro">Cada uno se actualiza en su propio lugar — este portal solo apunta hacia ellos.</p>
+    <p class="section-intro">Cada uno se actualiza en su propio lugar — este portal solo apunta hacia ellos. Agrupados por tipo, con el formato de descarga marcado.</p>
+
+    <p class="cat-label" style="--cat:var(--accent);"><span class="dot"></span>Solución técnica y presentaciones</p>
     <div class="hub-grid">
-      <a class="hub-card" href="https://claude.ai/code/artifact/4dabfe07-c766-48da-a5bf-93ec2bfab913" target="_blank" rel="noopener">
-        <span class="icon">❓</span>
-        <span class="title">Preguntas de consulta ECI</span>
-        <span class="desc">50 preguntas (35 detalladas + 15 ejecutivas) — ✓ ya enviadas y respondidas por la Escuela.</span>
-        <span class="meta">claude.ai/code/artifact →</span>
+      <a class="hub-card" style="--cat:var(--accent);" href="https://claude.ai/code/artifact/61bee825-b1a5-4773-bbbc-d2f2ef29a97d" target="_blank" rel="noopener">
+        <span class="icon">🏗️</span>
+        <span class="title">Solución Sangfor ECI</span>
+        <span class="desc">Alcance confirmado: virtualización (aSV+aNet) sobre 4 nodos, sin HCI completa. Arquitectura, 3 alternativas comerciales, ANS/SLA y metodología TCO/RTO.</span>
+        <div class="fmt-row"><span class="fmt web">ARTEFACTO</span></div>
       </a>
-      <a class="hub-card" href="https://claude.ai/code/artifact/c423682f-4d0a-40df-82c4-e3000b885c37" target="_blank" rel="noopener">
+      <div class="hub-card" style="--cat:var(--pdf);">
+        <span class="icon">🖥️</span>
+        <span class="title">Presentación de la solución</span>
+        <span class="desc">Virtualización aSV+aNet sobre 4 nodos — ventajas frente a VMware, tendencias post-Broadcom, HA/DR, migración por fases. Generada en NotebookLM.</span>
+        <div class="fmt-row">
+          <a class="fmt pdf" href="https://rlozano72-web.github.io/blt-eci-portal/Solucion-Sangfor-ECI-presentacion-v2.pdf" target="_blank" rel="noopener">↓ PDF</a>
+          <a class="fmt pptx" href="https://rlozano72-web.github.io/blt-eci-portal/Solucion-Sangfor-ECI-presentacion-v2.pptx" target="_blank" rel="noopener">↓ PPTX</a>
+        </div>
+      </div>
+      <div class="hub-card" style="--cat:var(--pdf);">
+        <span class="icon">🖧</span>
+        <span class="title">Arquitecturas de hardware — HPE vs. Dell</span>
+        <span class="desc">Comparativo técnico de las dos rutas de hardware ya cotizadas por Cydesys. Sin cifras de precio.</span>
+        <div class="fmt-row">
+          <a class="fmt pdf" href="https://rlozano72-web.github.io/blt-eci-portal/Arquitectura-HW-HPE-Dell-ECI.pdf" target="_blank" rel="noopener">↓ PDF</a>
+          <a class="fmt pptx" href="https://rlozano72-web.github.io/blt-eci-portal/Arquitectura-HW-HPE-Dell-ECI.pptx" target="_blank" rel="noopener">↓ PPTX</a>
+        </div>
+      </div>
+      <a class="hub-card" style="--cat:var(--docx);" href="https://claude.ai/code/artifact/51d2608a-64f5-4f01-8cda-187f6c5ef2db" target="_blank" rel="noopener">
+        <span class="icon">📐</span>
+        <span class="title">Estructura de la propuesta técnica</span>
+        <span class="desc">Mapa capítulo por capítulo de lo que hay que radicar, cruzado con el peso de evaluación del TdR.</span>
+        <div class="fmt-row"><span class="fmt web">ARTEFACTO</span><span class="fmt docx">DOCX</span></div>
+      </a>
+    </div>
+
+    <p class="cat-label" style="--cat:var(--crit);"><span class="dot"></span>Cumplimiento y cierre</p>
+    <div class="hub-grid">
+      <a class="hub-card" style="--cat:var(--crit);" href="https://rlozano72-web.github.io/blt-eci-portal/checklist-cierre-propuesta-eci.docx" target="_blank" rel="noopener">
+        <span class="icon">🚨</span>
+        <span class="title">Checklist de cierre de propuesta</span>
+        <span class="desc">Diagnóstico de qué falta para radicar: legales/financieros de BLT, vigencia Cámara de Comercio, póliza de seriedad, experiencia, carta de aval, anexos.</span>
+        <div class="fmt-row"><span class="fmt docx">DOCX</span></div>
+      </a>
+      <a class="hub-card" style="--cat:var(--ok);" href="https://claude.ai/code/artifact/c423682f-4d0a-40df-82c4-e3000b885c37" target="_blank" rel="noopener">
         <span class="icon">✅</span>
         <span class="title">Checklist RFQ ECI</span>
         <span class="desc">114 ítems de cumplimiento con citación exacta al TdR y anexos, evidencia y observación por ítem.</span>
-        <span class="meta">claude.ai/code/artifact →</span>
+        <div class="fmt-row"><span class="fmt web">ARTEFACTO</span></div>
       </a>
-      <a class="hub-card" href="https://claude.ai/code/artifact/61bee825-b1a5-4773-bbbc-d2f2ef29a97d" target="_blank" rel="noopener">
-        <span class="icon">🏗️</span>
-        <span class="title">Solución Sangfor ECI</span>
-        <span class="desc">Alcance confirmado: virtualización (aSV+aNet) sobre 4 nodos, sin HCI completa. Arquitectura, 3 alternativas comerciales, ANS/SLA y metodología TCO/RTO. Con botón de descarga de la presentación.</span>
-        <span class="meta">claude.ai/code/artifact →</span>
-      </a>
-      <a class="hub-card" href="https://claude.ai/code/artifact/51d2608a-64f5-4f01-8cda-187f6c5ef2db" target="_blank" rel="noopener">
-        <span class="icon">📐</span>
-        <span class="title">Estructura de la propuesta técnica</span>
-        <span class="desc">Mapa capítulo por capítulo de lo que hay que radicar, cruzado con el peso de evaluación del TdR y lo que falta de Christian/Cydesys. Descargable en Word.</span>
-        <span class="meta">claude.ai/code/artifact · descargar .docx →</span>
-      </a>
-      <a class="hub-card" href="https://rlozano72-web.github.io/blt-eci-portal/Solucion-Sangfor-ECI-presentacion-v2.pdf" target="_blank" rel="noopener">
-        <span class="icon">🖥️</span>
-        <span class="title">Presentación de la solución (alcance corregido)</span>
-        <span class="desc">Virtualización aSV+aNet sobre 4 nodos, sin HCI completa — ventajas frente a VMware, tendencias post-Broadcom, HA/DR, migración por fases. Generada en NotebookLM con imágenes, alineada al TdR.</span>
-        <span class="meta">descargar PDF →</span>
-      </a>
-      <a class="hub-card" href="https://rlozano72-web.github.io/blt-eci-portal/Solucion-Sangfor-ECI-presentacion-v2.pptx" target="_blank" rel="noopener">
-        <span class="icon">📊</span>
-        <span class="title">Presentación de la solución (editable)</span>
-        <span class="desc">Mismo contenido en PowerPoint para ajustar antes de incluirla en el documento de entrega técnica.</span>
-        <span class="meta">descargar PPTX →</span>
-      </a>
-      <a class="hub-card" href="https://rlozano72-web.github.io/blt-eci-portal/Arquitectura-HW-HPE-Dell-ECI.pdf" target="_blank" rel="noopener">
-        <span class="icon">🖧</span>
-        <span class="title">Arquitecturas de hardware — HPE vs. Dell (Cydesys)</span>
-        <span class="desc">Comparativo técnico de las dos rutas de hardware ya cotizadas por Cydesys: Opción A (HPE, nueva, cumple Anexo 4) y Opción B (actualización Dell, riesgo de cumplimiento). Sin cifras de precio.</span>
-        <span class="meta">descargar PDF →</span>
-      </a>
-      <a class="hub-card" href="https://rlozano72-web.github.io/blt-eci-portal/Arquitectura-HW-HPE-Dell-ECI.pptx" target="_blank" rel="noopener">
-        <span class="icon">🖧</span>
-        <span class="title">Arquitecturas de hardware (editable)</span>
-        <span class="desc">Mismo comparativo HPE vs. Dell en PowerPoint editable.</span>
-        <span class="meta">descargar PPTX →</span>
-      </a>
-      <a class="hub-card" href="https://rlozano72-web.github.io/blt-eci-portal/checklist-cierre-propuesta-eci.docx" target="_blank" rel="noopener">
-        <span class="icon">✅</span>
-        <span class="title">Checklist de cierre de propuesta</span>
-        <span class="desc">Diagnóstico completo de qué falta para radicar: documentos jurídicos/financieros de BLT, vigencia de Cámara de Comercio, póliza de seriedad, certificados de experiencia, carta de aval del fabricante y anexos por diligenciar.</span>
-        <span class="meta">descargar Word →</span>
-      </a>
-      <a class="hub-card" href="https://claude.ai/code/artifact/169f561a-0585-46e0-bcd5-3501520562a6" target="_blank" rel="noopener">
+      <a class="hub-card" style="--cat:var(--ok);" href="https://claude.ai/code/artifact/169f561a-0585-46e0-bcd5-3501520562a6" target="_blank" rel="noopener">
         <span class="icon">📋</span>
         <span class="title">Requisitos habilitantes</span>
         <span class="desc">21 requisitos jurídicos, financieros y de experiencia, con cita textual y página del TdR.</span>
-        <span class="meta">claude.ai/code/artifact →</span>
+        <div class="fmt-row"><span class="fmt web">ARTEFACTO</span></div>
       </a>
-      <a class="hub-card" href="https://docs.google.com/spreadsheets/d/1Ro2cEjuO2AZlUmIUt4NRlRZ26-96VNTF5ik7P_MHOzo/edit" target="_blank" rel="noopener">
+      <a class="hub-card" style="--cat:var(--done);" href="https://claude.ai/code/artifact/decb377c-faf7-42e5-825c-35582f321144" target="_blank" rel="noopener">
+        <span class="icon">⚖️</span>
+        <span class="title">Estructura BLT–Cydesys</span>
+        <span class="desc">Modelo de Unión Temporal con distribución equilibrada de responsabilidad, beneficio e indemnidad recíproca.</span>
+        <div class="fmt-row"><span class="fmt web">ARTEFACTO</span></div>
+      </a>
+    </div>
+
+    <p class="cat-label" style="--cat:var(--warn);"><span class="dot"></span>Preguntas, anexos y colaboración</p>
+    <div class="hub-grid">
+      <a class="hub-card" style="--cat:var(--warn);" href="https://claude.ai/code/artifact/4dabfe07-c766-48da-a5bf-93ec2bfab913" target="_blank" rel="noopener">
+        <span class="icon">❓</span>
+        <span class="title">Preguntas de consulta ECI</span>
+        <span class="desc">50 preguntas (35 detalladas + 15 ejecutivas) — ✓ ya enviadas y respondidas por la Escuela.</span>
+        <div class="fmt-row"><span class="fmt web">ARTEFACTO</span></div>
+      </a>
+      <a class="hub-card" style="--cat:var(--warn);" href="https://claude.ai/code/artifact/a5e708f8-07e6-4932-be11-87b5c4caa70d" target="_blank" rel="noopener">
+        <span class="icon">📑</span>
+        <span class="title">Anexos de propuesta técnica</span>
+        <span class="desc">Cronograma de implementación por fases, checklist en el formato exacto del TdR (28 ítems), recordatorio de la carta de aval de Sangfor.</span>
+        <div class="fmt-row"><span class="fmt web">ARTEFACTO</span></div>
+      </a>
+      <a class="hub-card" style="--cat:var(--web);" href="https://docs.google.com/spreadsheets/d/1Ro2cEjuO2AZlUmIUt4NRlRZ26-96VNTF5ik7P_MHOzo/edit" target="_blank" rel="noopener">
         <span class="icon">🟢</span>
         <span class="title">Sheet colaborativo</span>
         <span class="desc">Alternativa sin límites de edición simultánea para Camilo, Christian y Rodrigo — mismas 35+15 preguntas.</span>
-        <span class="meta">docs.google.com/spreadsheets →</span>
-      </a>
-      <a class="hub-card" href="https://claude.ai/code/artifact/decb377c-faf7-42e5-825c-35582f321144" target="_blank" rel="noopener">
-        <span class="icon">⚖️</span>
-        <span class="title">Estructura BLT–Cydesys</span>
-        <span class="desc">Modelo de Unión Temporal con distribución equilibrada de responsabilidad, beneficio e indemnidad recíproca — validado por la respuesta oficial de la ECI.</span>
-        <span class="meta">claude.ai/code/artifact →</span>
-      </a>
-      <a class="hub-card" href="https://claude.ai/code/artifact/a5e708f8-07e6-4932-be11-87b5c4caa70d" target="_blank" rel="noopener">
-        <span class="icon">📑</span>
-        <span class="title">Anexos de propuesta técnica</span>
-        <span class="desc">Cronograma de implementación por fases, checklist de cumplimiento en el formato exacto del TdR (28 ítems), y recordatorio de la carta de aval de Sangfor.</span>
-        <span class="meta">claude.ai/code/artifact →</span>
+        <div class="fmt-row"><span class="fmt web">GOOGLE SHEETS</span></div>
       </a>
     </div>
   </section>
