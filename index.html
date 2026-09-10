@@ -253,10 +253,20 @@
     <p class="section-intro">Versión completa, sin redactar, para la presentación ante el comité técnico (16-sep) y el envío de la propuesta final (23-sep). Incluye cifras económicas reales de la Unión Temporal.</p>
     <div class="featured-grid">
       <div class="featured-card" style="--bar:var(--accent);">
-        <p class="kicker">Deck de la sustentación — 45 min</p>
+        <p class="kicker">Deck de la sustentación — 45 min · NotebookLM</p>
         <div class="icon-row"><span class="icon">🖥️</span></div>
-        <span class="title">Sustentación técnica ante el comité</span>
-        <span class="desc">11 diapositivas estructuradas a los 5 puntos de agenda de Jimmy: el problema, resumen ejecutivo y arquitectura Sangfor, sustentación del numeral 4.1 (capacidad, disponibilidad, seguridad, red, gestión), escalabilidad scale-out, migración desde VMware sin downtime, y diferenciadores. Lenguaje sencillo, con datos reales (66 VMs, 84 cores, 40% holgura, 99,9%, RTO&lt;4h del BIA).</span>
+        <span class="title">Sustentación técnica ante el comité (v2)</span>
+        <span class="desc">18 diapositivas (15 + 3 de respaldo para el Q&A) generadas en NotebookLM sobre todas las fuentes del proyecto, con la distribución de tiempo por bloque: resumen ejecutivo, sustentación del numeral 4.1 (4.1.1 a 4.1.5), escalabilidad scale-out, plan de migración desde VMware en 4 fases con rollback, y diferenciadores/TCO. Estilo blueprint técnico, datos reales (66 VMs, 84 cores, 61.44→90-123 TB, SLA 99,9%, RTO&lt;4h del BIA).</span>
+        <div class="fmt-row">
+          <a class="fmt pdf" href="https://rlozano72-web.github.io/blt-eci-portal/Sustentacion-Tecnica-NotebookLM-ECI.pdf" target="_blank" rel="noopener">↓ PDF</a>
+          <a class="fmt pptx" href="https://rlozano72-web.github.io/blt-eci-portal/Sustentacion-Tecnica-NotebookLM-ECI.pptx" target="_blank" rel="noopener">↓ PPTX</a>
+        </div>
+      </div>
+      <div class="featured-card" style="--bar:var(--accent);">
+        <p class="kicker">Deck de la sustentación — versión previa</p>
+        <div class="icon-row"><span class="icon">🖥️</span></div>
+        <span class="title">Sustentación técnica ante el comité (v1)</span>
+        <span class="desc">11 diapositivas estructuradas a los 5 puntos de agenda de Jimmy. Lenguaje sencillo, con imagen real de la arquitectura Sangfor. Versión inicial — se conserva como alternativa más corta.</span>
         <div class="fmt-row">
           <a class="fmt pdf" href="https://rlozano72-web.github.io/blt-eci-portal/Sustentacion-Tecnica-ECI-BLT-Cydesys.pdf" target="_blank" rel="noopener">↓ PDF</a>
           <a class="fmt pptx" href="https://rlozano72-web.github.io/blt-eci-portal/Sustentacion-Tecnica-ECI-BLT-Cydesys.pptx" target="_blank" rel="noopener">↓ PPTX</a>
@@ -568,6 +578,7 @@
     <div class="changelog">
       <h3>⚠️ Cambios que afectan lo que ya teníamos armado</h3>
       <ul>
+        <li><b>Actualización 10-sep (v2):</b> generada en <b>NotebookLM</b> la versión completa de la sustentación técnica (18 diapositivas = 15 + 3 de respaldo para el Q&A), sobre todas las fuentes del notebook "Proyecto Escuela Colombiana de Ingeniería", con la distribución de tiempo por bloque, el plan de migración VMware en 4 fases con rollback, y estilo blueprint técnico. Publicada en el portal junto a la v1.</li>
         <li><b>Actualización 10-sep:</b> generada la <b>propuesta de sustentación técnica</b> (deck de 11 diapositivas, PDF + PPTX) para los 45 min de exposición ante el comité, estructurada exactamente a los 5 puntos de agenda del correo de Jimmy y construida a partir de todas las fuentes de NotebookLM del proyecto. Además se propagó el cronograma del TdR del 9-sep y del correo de Jimmy a todo el portal (tira superior, tabla de cronograma, sección "qué falta", panel de cumplimiento, footer): presentación 16-sep, preselección 17-sep, PoC 21-26 sep, propuesta final 23-sep, selección 2-oct; y se corrigió la numeración de anexos (Compromiso de Integridad = Anexo 5, no Anexo 6).</li>
         <li><b>Actualización 16-sep:</b> confirmada la fecha de presentación con la ECI (miércoles 16-sep, 3:30–4:30 p.m.). Se publicaron las versiones completas de la presentación ejecutiva de próximos pasos y de la propuesta económica de la Unión Temporal (Opción A HPE recomendada / Opción B Dell con riesgo declarado, TCO a 5 años) — a petición explícita de Rodrigo, la propuesta económica incluye las cifras reales de venta a la ECI, por lo que se publicó como artifact privado aparte (no en el sitio público de GitHub Pages, para no exponer precios a cualquiera con el link) y se enlaza desde aquí.</li>
         <li><b>Actualización 9-sep:</b> Jimmy Ignacio Ruiz Villate (Dirección de Tecnología, ECI) confirmó por correo la recepción de la propuesta técnica radicada el 7-sep, actualmente en revisión del equipo técnico de la Dirección de Tecnología. Convoca a presentar la propuesta (arquitectura y capacidades) ante el comité técnico, ofreciendo dos opciones de fecha: lunes 14-sep 10:00–11:00 am o miércoles 16-sep 3:30–4:30 pm — <b>elección y respuesta a Jimmy pendientes de decisión de Rodrigo</b>. La sesión será de 45 min de exposición + 15 min de preguntas, cubriendo 5 puntos de agenda (resumen ejecutivo, sustentación técnica del numeral 4.1, escalabilidad, migración/interoperabilidad con VMware ESXi/vSAN, y diferenciadores). La preselección de proponentes será el 17-sep; solo los preseleccionados avanzan a la Prueba de Concepto (PoC), del 21 al 26 de septiembre, 2 días calendario por proponente, con infraestructura propia del proponente y modalidad remota u onsite por solicitud.</li>
